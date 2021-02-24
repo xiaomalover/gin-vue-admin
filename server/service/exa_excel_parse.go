@@ -60,7 +60,7 @@ func ParseExcel2InfoList() ([]model.SysBaseMenu, error) {
 		hidden, _ := strconv.ParseBool(row[3])
 		sort, _ := strconv.Atoi(row[5])
 		menu := model.SysBaseMenu{
-			GVA_MODEL: global.GVA_MODEL{
+			GvaModel: global.GvaModel{
 				ID: uint(id),
 			},
 			Name: row[1],

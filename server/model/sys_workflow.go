@@ -30,7 +30,7 @@ type WorkflowBase struct {
 
 func (w WorkflowBase) CreateWorkflowMove() (businessModel *WorkflowMove) {
 	return &WorkflowMove{
-		GVA_MODEL:         global.GVA_MODEL{ID: w.WorkflowMoveID},
+		GvaModel:         global.GvaModel{ID: w.WorkflowMoveID},
 		BusinessType:      w.BusinessType,
 		PromoterID:        w.PromoterID,
 		OperatorID:        w.OperatorID,
@@ -56,7 +56,7 @@ func (w WorkflowBase) GetWorkflowBase() (workflowBase WorkflowBase) {
 }
 
 type WorkflowMove struct {
-	global.GVA_MODEL
+	global.GvaModel
 	WorkflowProcessID string          `json:"workflowProcessID" gorm:"comment:工作流模板ID"`
 	WorkflowProcess   WorkflowProcess `gorm:"<-:false" json:"workflowProcess" gorm:"comment:工作流模板具体信息"`
 	WorkflowNodeID    string          `json:"workflowNodeID" gorm:"comment:工作流节点ID"`
@@ -140,7 +140,7 @@ type WorkflowEdge struct {
 
 type WorkflowStartPoint struct {
 	WorkflowEdgeID string
-	global.GVA_MODEL
+	global.GvaModel
 	X     float64 `json:"x"`
 	Y     float64 `json:"y"`
 	Index int     `json:"index"`
@@ -148,7 +148,7 @@ type WorkflowStartPoint struct {
 
 type WorkflowEndPoint struct {
 	WorkflowEdgeID string
-	global.GVA_MODEL
+	global.GvaModel
 	X     float64 `json:"x"`
 	Y     float64 `json:"y"`
 	Index int     `json:"index"`

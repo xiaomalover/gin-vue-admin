@@ -45,7 +45,7 @@ func CreateApi(c *gin.Context) {
 func DeleteApi(c *gin.Context) {
 	var api model.SysApi
 	_ = c.ShouldBindJSON(&api)
-	if err := utils.Verify(api.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(api.GvaModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

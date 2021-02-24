@@ -48,7 +48,7 @@ func CreateExaCustomer(c *gin.Context) {
 func DeleteExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindJSON(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.GvaModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -71,7 +71,7 @@ func DeleteExaCustomer(c *gin.Context) {
 func UpdateExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindJSON(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.GvaModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -98,7 +98,7 @@ func UpdateExaCustomer(c *gin.Context) {
 func GetExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindQuery(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.GvaModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

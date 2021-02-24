@@ -28,15 +28,15 @@ var WorkflowEdge = []model.WorkflowEdge{
 	{ID: "flow1604985881207", CreatedAt: time.Now(), UpdatedAt: time.Now(), WorkflowProcessID: "leaveFlow", Clazz: "flow", Source: "userTask1603681299962", Target: "end1603681358043", SourceAnchor: 2, TargetAnchor: 2, Shape: "flow-polyline-round", Label: "不同意", HideIcon: false, ConditionExpression: "no", Reverse: false},
 }
 var WorkflowStartPoint = []model.WorkflowStartPoint{
-	{WorkflowEdgeID: "flow1604985849039", GVA_MODEL: global.GVA_MODEL{ID: 31, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 137, Y: 201, Index: 1},
-	{WorkflowEdgeID: "flow1604985879574", GVA_MODEL: global.GVA_MODEL{ID: 32, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 320.5, Y: 174, Index: 0},
-	{WorkflowEdgeID: "flow1604985881207", GVA_MODEL: global.GVA_MODEL{ID: 33, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 320.5, Y: 230, Index: 2},
+	{WorkflowEdgeID: "flow1604985849039", GvaModel: global.GvaModel{ID: 31, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 137, Y: 201, Index: 1},
+	{WorkflowEdgeID: "flow1604985879574", GvaModel: global.GvaModel{ID: 32, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 320.5, Y: 174, Index: 0},
+	{WorkflowEdgeID: "flow1604985881207", GvaModel: global.GvaModel{ID: 33, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 320.5, Y: 230, Index: 2},
 }
 
 var WorkflowEndPoint = []model.WorkflowEndPoint{
-	{WorkflowEdgeID: "flow1604985849039", GVA_MODEL: global.GVA_MODEL{ID: 31, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 270, Y: 202, Index: 3},
-	{WorkflowEdgeID: "flow1604985879574", GVA_MODEL: global.GVA_MODEL{ID: 32, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 518, Y: 83.5, Index: 2},
-	{WorkflowEdgeID: "flow1604985881207", GVA_MODEL: global.GVA_MODEL{ID: 33, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 517.5, Y: 302, Index: 2},
+	{WorkflowEdgeID: "flow1604985849039", GvaModel: global.GvaModel{ID: 31, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 270, Y: 202, Index: 3},
+	{WorkflowEdgeID: "flow1604985879574", GvaModel: global.GvaModel{ID: 32, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 518, Y: 83.5, Index: 2},
+	{WorkflowEdgeID: "flow1604985881207", GvaModel: global.GvaModel{ID: 33, CreatedAt: time.Now(), UpdatedAt: time.Now()}, X: 517.5, Y: 302, Index: 2},
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
