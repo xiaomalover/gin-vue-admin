@@ -23,7 +23,7 @@ type OSS interface {
 //@return: OSS
 
 func NewOss() OSS {
-	switch global.GVA_CONFIG.System.OssType {
+	switch global.GvaConfig.System.OssType {
 	case "local":
 		return &Local{}
 	case "qiniu":

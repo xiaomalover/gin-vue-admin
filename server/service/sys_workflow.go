@@ -23,7 +23,7 @@ func getTable(businessType string) interface{} {
 //@return: err error
 
 func CreateWorkflowProcess(workflowProcess model.WorkflowProcess) (err error) {
-	err = global.GVA_DB.Create(&workflowProcess).Error
+	err = global.GvaDb.Create(&workflowProcess).Error
 	return err
 }
 
@@ -34,7 +34,7 @@ func CreateWorkflowProcess(workflowProcess model.WorkflowProcess) (err error) {
 //@return: err error
 
 func DeleteWorkflowProcess(workflowProcess model.WorkflowProcess) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	err = global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		var txErr error
 		txErr = tx.Delete(&workflowProcess).Error
 		if txErr != nil {
@@ -67,7 +67,7 @@ func DeleteWorkflowProcess(workflowProcess model.WorkflowProcess) (err error) {
 //@return: err error
 
 func DeleteWorkflowProcessByIds(ids request.IdsReq) (err error) {
-	err = global.GVA_DB.Delete(&[]model.WorkflowProcess{}, "id in ?", ids.Ids).Error
+	err = global.GvaDb.Delete(&[]model.WorkflowProcess{}, "id in ?", ids.Ids).Error
 	return err
 }
 
@@ -78,7 +78,7 @@ func DeleteWorkflowProcessByIds(ids request.IdsReq) (err error) {
 //@return: err error
 
 func UpdateWorkflowProcess(workflowProcess *model.WorkflowProcess) (err error) {
-	return global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	return global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		var txErr error
 		var edges []model.WorkflowEdge
 		var edgesIds []string
@@ -124,7 +124,7 @@ func UpdateWorkflowProcess(workflowProcess *model.WorkflowProcess) (err error) {
 //@return: err error,workflowProcess model.WorkflowProcess
 
 func GetWorkflowProcess(id string) (err error, workflowProcess model.WorkflowProcess) {
-	err = global.GVA_DB.Preload("Nodes").Preload("Edges").Where("id = ?", id).First(&workflowProcess).Error
+	err = global.GvaDb.Preload("Nodes").Preload("Edges").Where("id = ?", id).First(&workflowProcess).Error
 	return
 }
 
@@ -135,7 +135,7 @@ func GetWorkflowProcess(id string) (err error, workflowProcess model.WorkflowPro
 //@return: err error, workflowNodes []model.WorkflowNode
 
 func FindWorkflowStep(id string) (err error, workflowNode model.WorkflowProcess) {
-	err = global.GVA_DB.Preload("Nodes", "clazz = ?", constant.START).Where("id = ?", id).First(&workflowNode).Error
+	err = global.GvaDb.Preload("Nodes", "clazz = ?", constant.START).Where("id = ?", id).First(&workflowNode).Error
 	return
 }
 
@@ -149,7 +149,7 @@ func GetWorkflowProcessInfoList(info request.WorkflowProcessSearch) (err error, 
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db
-	db := global.GVA_DB.Model(&model.WorkflowProcess{})
+	db := global.GvaDb.Model(&model.WorkflowProcess{})
 	var workflowProcesss []model.WorkflowProcess
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Name != "" {
@@ -170,7 +170,7 @@ func GetWorkflowProcessInfoList(info request.WorkflowProcessSearch) (err error, 
 //@return: err error
 
 func StartWorkflow(wfInterface model.GVA_Workflow) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	err = global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		var txErr error
 		tableName := getTable(wfInterface.GetBusinessType()).(schema.Tabler).TableName()
 		txErr = tx.Table(tableName).Create(wfInterface).Error
@@ -192,7 +192,7 @@ func StartWorkflow(wfInterface model.GVA_Workflow) (err error) {
 }
 
 func CompleteWorkflowMove(wfInterface model.GVA_Workflow) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	err = global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		var txErr error
 		tableName := getTable(wfInterface.GetBusinessType()).(schema.Tabler).TableName()
 		txErr = tx.Table(tableName).Where("id = ?", wfInterface.GetBusinessID()).Updates(wfInterface).Error
@@ -410,20 +410,20 @@ func createNewWorkflowMove(tx *gorm.DB, oldWfm *model.WorkflowMove, targetNodeID
 }
 
 func GetMyStated(userID uint) (err error, wfms []model.WorkflowMove) {
-	err = global.GVA_DB.Preload("Promoter").Preload("Operator").Preload("WorkflowNode").Preload("WorkflowProcess").Joins("INNER JOIN workflow_nodes as node ON workflow_moves.workflow_node_id = node.id").Find(&wfms, "promoter_id = ? and ( is_active = ? OR node.clazz = ?)", userID, true, "end").Error
+	err = global.GvaDb.Preload("Promoter").Preload("Operator").Preload("WorkflowNode").Preload("WorkflowProcess").Joins("INNER JOIN workflow_nodes as node ON workflow_moves.workflow_node_id = node.id").Find(&wfms, "promoter_id = ? and ( is_active = ? OR node.clazz = ?)", userID, true, "end").Error
 	return err, wfms
 }
 
 func GetMyNeed(userID uint, AuthorityID string) (err error, wfms []model.WorkflowMove) {
 	user := "%," + strconv.Itoa(int(userID)) + ",%"
 	auth := "%," + AuthorityID + ",%"
-	err = global.GVA_DB.Preload("Promoter").Preload("Operator").Preload("WorkflowNode").Preload("WorkflowProcess").Joins("INNER JOIN workflow_nodes as node ON workflow_moves.workflow_node_id = node.id").Where("is_active = ? AND ((node.assign_type = ? AND node.assign_value LIKE ? ) OR (node.assign_type = ? AND node.assign_value LIKE ? ) OR (node.assign_type = ? AND promoter_id = ? ))", true, "user", user, "authority", auth, "self", userID).Find(&wfms).Error
+	err = global.GvaDb.Preload("Promoter").Preload("Operator").Preload("WorkflowNode").Preload("WorkflowProcess").Joins("INNER JOIN workflow_nodes as node ON workflow_moves.workflow_node_id = node.id").Where("is_active = ? AND ((node.assign_type = ? AND node.assign_value LIKE ? ) OR (node.assign_type = ? AND node.assign_value LIKE ? ) OR (node.assign_type = ? AND promoter_id = ? ))", true, "user", user, "authority", auth, "self", userID).Find(&wfms).Error
 	return err, wfms
 }
 
 func GetWorkflowMoveByID(id float64) (err error, move model.WorkflowMove, moves []model.WorkflowMove, business interface{}) {
 	var result interface{}
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	err = global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		var txErr error
 		txErr = tx.Preload("Promoter").Preload("Operator").Preload("WorkflowNode").Preload("WorkflowProcess").First(&move, "id = ?", id).Error
 		if txErr != nil {

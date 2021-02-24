@@ -196,14 +196,14 @@ func CompleteWorkflowMove(c *gin.Context) {
 func GetMyStated(c *gin.Context) {
 	if claims, exists := c.Get("claims"); !exists {
 		errStr := "从Gin的Context中获取从jwt解析出来的用户ID失败, 请检查路由是否使用jwt中间件"
-		global.GVA_LOG.Error(errStr)
+		global.GvaLog.Error(errStr)
 		response.FailWithMessage(errStr, c)
 	} else {
 		waitUse := claims.(*request.CustomClaims)
 		err, wfms := service.GetMyStated(waitUse.ID)
 		if err != nil {
 			errStr := err.Error()
-			global.GVA_LOG.Error(errStr)
+			global.GvaLog.Error(errStr)
 			response.FailWithMessage(errStr, c)
 			return
 		}
@@ -221,14 +221,14 @@ func GetMyStated(c *gin.Context) {
 func GetMyNeed(c *gin.Context) {
 	if claims, exists := c.Get("claims"); !exists {
 		errStr := "从Gin的Context中获取从jwt解析出来的用户ID失败, 请检查路由是否使用jwt中间件"
-		global.GVA_LOG.Error(errStr)
+		global.GvaLog.Error(errStr)
 		response.FailWithMessage(errStr, c)
 	} else {
 		waitUse := claims.(*request.CustomClaims)
 		err, wfms := service.GetMyNeed(waitUse.ID, waitUse.AuthorityId)
 		if err != nil {
 			errStr := err.Error()
-			global.GVA_LOG.Error(errStr)
+			global.GvaLog.Error(errStr)
 			response.FailWithMessage(errStr, c)
 			return
 		}
@@ -250,7 +250,7 @@ func GetWorkflowMoveByID(c *gin.Context) {
 	err, move, moves, business := service.GetWorkflowMoveByID(req.Id)
 	if err != nil {
 		errStr := err.Error()
-		global.GVA_LOG.Error(errStr)
+		global.GvaLog.Error(errStr)
 		response.FailWithMessage(errStr, c)
 		return
 	}

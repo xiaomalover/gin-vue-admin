@@ -17,7 +17,7 @@ import (
 // @Router /system/getSystemConfig [post]
 func GetSystemConfig(c *gin.Context) {
 	if err, config := service.GetSystemConfig(); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.SysConfigResponse{Config: config}, "获取成功", c)
@@ -35,7 +35,7 @@ func SetSystemConfig(c *gin.Context) {
 	var sys model.System
 	_ = c.ShouldBindJSON(&sys)
 	if err := service.SetSystemConfig(sys); err != nil {
-		global.GVA_LOG.Error("设置失败!", zap.Any("err", err))
+		global.GvaLog.Error("设置失败!", zap.Any("err", err))
 		response.FailWithMessage("设置失败", c)
 	} else {
 		response.OkWithData("设置成功", c)
@@ -54,7 +54,7 @@ func ReloadSystem(c *gin.Context) {
 	var sys model.System
 	_ = c.ShouldBindJSON(&sys)
 	if err := service.SetSystemConfig(sys); err != nil {
-		global.GVA_LOG.Error("重启系统失败!", zap.Any("err", err))
+		global.GvaLog.Error("重启系统失败!", zap.Any("err", err))
 		response.FailWithMessage("重启系统失败", c)
 	} else {
 		response.OkWithMessage("重启系统成功", c)
@@ -69,7 +69,7 @@ func ReloadSystem(c *gin.Context) {
 // @Router /system/getServerInfo [post]
 func GetServerInfo(c *gin.Context) {
 	if server, err := service.GetServerInfo(); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 		return
 	} else {

@@ -22,7 +22,7 @@ func Viper(path ...string) *viper.Viper {
 				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", utils.ConfigFile)
 			} else {
 				config = configEnv
-				fmt.Printf("您正在使用GVA_CONFIG环境变量,config的路径为%v\n", config)
+				fmt.Printf("您正在使用GvaConfig环境变量,config的路径为%v\n", config)
 			}
 		} else {
 			fmt.Printf("您正在使用命令行的-c参数传递的值,config的路径为%v\n", config)
@@ -42,12 +42,12 @@ func Viper(path ...string) *viper.Viper {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file changed:", e.Name)
-		if err := v.Unmarshal(&global.GVA_CONFIG); err != nil {
+		if err := v.Unmarshal(&global.GvaConfig); err != nil {
 			fmt.Println(err)
 		}
 	})
 
-	if err := v.Unmarshal(&global.GVA_CONFIG); err != nil {
+	if err := v.Unmarshal(&global.GvaConfig); err != nil {
 		fmt.Println(err)
 	}
 	return v

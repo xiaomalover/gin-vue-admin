@@ -31,20 +31,20 @@ func SimpleUploaderUpload(c *gin.Context) {
 	hasDir, _ := utils.PathExists(chunkDir)
 	if !hasDir {
 		if err := utils.CreateDir(chunkDir); err != nil {
-			global.GVA_LOG.Error("创建目录失败!", zap.Any("err", err))
+			global.GvaLog.Error("创建目录失败!", zap.Any("err", err))
 		}
 	}
 	chunkPath := chunkDir + chunk.Filename + chunk.ChunkNumber
 	err = c.SaveUploadedFile(header, chunkPath)
 	if err != nil {
-		global.GVA_LOG.Error("切片创建失败!", zap.Any("err", err))
+		global.GvaLog.Error("切片创建失败!", zap.Any("err", err))
 		response.FailWithMessage("切片创建失败", c)
 		return
 	}
 	chunk.CurrentChunkPath = chunkPath
 	err = service.SaveChunk(chunk)
 	if err != nil {
-		global.GVA_LOG.Error("切片创建失败!", zap.Any("err", err))
+		global.GvaLog.Error("切片创建失败!", zap.Any("err", err))
 		response.FailWithMessage("切片创建失败", c)
 		return
 	} else {
@@ -63,7 +63,7 @@ func CheckFileMd5(c *gin.Context) {
 	md5 := c.Query("md5")
 	err, chunks, isDone := service.CheckFileMd5(md5)
 	if err != nil {
-		global.GVA_LOG.Error("md5读取失败!", zap.Any("err", err))
+		global.GvaLog.Error("md5读取失败!", zap.Any("err", err))
 		response.FailWithMessage("md5读取失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{
@@ -85,7 +85,7 @@ func MergeFileMd5(c *gin.Context) {
 	fileName := c.Query("fileName")
 	err := service.MergeFileMd5(md5, fileName)
 	if err != nil {
-		global.GVA_LOG.Error("md5读取失败!", zap.Any("err", err))
+		global.GvaLog.Error("md5读取失败!", zap.Any("err", err))
 		response.FailWithMessage("md5读取失败", c)
 	} else {
 		response.OkWithMessage("合并成功", c)

@@ -15,7 +15,7 @@ import (
 //@return: err error
 
 func JsonInBlacklist(jwtList model.JwtBlacklist) (err error) {
-	err = global.GVA_DB.Create(&jwtList).Error
+	err = global.GvaDb.Create(&jwtList).Error
 	return
 }
 
@@ -26,7 +26,7 @@ func JsonInBlacklist(jwtList model.JwtBlacklist) (err error) {
 //@return: bool
 
 func IsBlacklist(jwt string) bool {
-	isNotFound := errors.Is(global.GVA_DB.Where("jwt = ?", jwt).First(&model.JwtBlacklist{}).Error, gorm.ErrRecordNotFound)
+	isNotFound := errors.Is(global.GvaDb.Where("jwt = ?", jwt).First(&model.JwtBlacklist{}).Error, gorm.ErrRecordNotFound)
 	return !isNotFound
 }
 
@@ -37,7 +37,7 @@ func IsBlacklist(jwt string) bool {
 //@return: err error, redisJWT string
 
 func GetRedisJWT(userName string) (err error, redisJWT string) {
-	redisJWT, err = global.GVA_REDIS.Get(userName).Result()
+	redisJWT, err = global.GvaRedis.Get(userName).Result()
 	return err, redisJWT
 }
 
@@ -49,7 +49,7 @@ func GetRedisJWT(userName string) (err error, redisJWT string) {
 
 func SetRedisJWT(jwt string, userName string) (err error) {
 	// 此处过期时间等于jwt过期时间
-	timer := time.Duration(global.GVA_CONFIG.JWT.ExpiresTime) * time.Second
-	err = global.GVA_REDIS.Set(userName, jwt, timer).Err()
+	timer := time.Duration(global.GvaConfig.JWT.ExpiresTime) * time.Second
+	err = global.GvaRedis.Set(userName, jwt, timer).Err()
 	return err
 }

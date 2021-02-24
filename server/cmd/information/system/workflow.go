@@ -42,7 +42,7 @@ var WorkflowEndPoint = []model.WorkflowEndPoint{
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 工作流相关 表数据初始化
 func (w *workflow) Init() error {
-	return global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	return global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(&WorkflowProcess).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}

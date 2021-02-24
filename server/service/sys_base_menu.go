@@ -14,13 +14,13 @@ import (
 //@return: err error
 
 func DeleteBaseMenu(id float64) (err error) {
-	err = global.GVA_DB.Preload("Parameters").Where("parent_id = ?", id).First(&model.SysBaseMenu{}).Error
+	err = global.GvaDb.Preload("Parameters").Where("parent_id = ?", id).First(&model.SysBaseMenu{}).Error
 	if err != nil {
 		var menu model.SysBaseMenu
-		db := global.GVA_DB.Preload("SysAuthoritys").Where("id = ?", id).First(&menu).Delete(&menu)
-		err = global.GVA_DB.Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", id).Error
+		db := global.GvaDb.Preload("SysAuthoritys").Where("id = ?", id).First(&menu).Delete(&menu)
+		err = global.GvaDb.Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", id).Error
 		if len(menu.SysAuthoritys) > 0 {
-			err = global.GVA_DB.Model(&menu).Association("SysAuthoritys").Delete(&menu.SysAuthoritys)
+			err = global.GvaDb.Model(&menu).Association("SysAuthoritys").Delete(&menu.SysAuthoritys)
 		} else {
 			err = db.Error
 		}
@@ -50,17 +50,17 @@ func UpdateBaseMenu(menu model.SysBaseMenu) (err error) {
 	upDateMap["icon"] = menu.Icon
 	upDateMap["sort"] = menu.Sort
 
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
+	err = global.GvaDb.Transaction(func(tx *gorm.DB) error {
 		db := tx.Where("id = ?", menu.ID).Find(&oldMenu)
 		if oldMenu.Name != menu.Name {
 			if !errors.Is(tx.Where("id <> ? AND name = ?", menu.ID, menu.Name).First(&model.SysBaseMenu{}).Error, gorm.ErrRecordNotFound) {
-				global.GVA_LOG.Debug("存在相同name修改失败")
+				global.GvaLog.Debug("存在相同name修改失败")
 				return errors.New("存在相同name修改失败")
 			}
 		}
 		txErr := tx.Unscoped().Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", menu.ID).Error
 		if txErr != nil {
-			global.GVA_LOG.Debug(txErr.Error())
+			global.GvaLog.Debug(txErr.Error())
 			return txErr
 		}
 		if len(menu.Parameters) > 0 {
@@ -69,14 +69,14 @@ func UpdateBaseMenu(menu model.SysBaseMenu) (err error) {
 			}
 			txErr = tx.Create(&menu.Parameters).Error
 			if txErr != nil {
-				global.GVA_LOG.Debug(txErr.Error())
+				global.GvaLog.Debug(txErr.Error())
 				return txErr
 			}
 		}
 
 		txErr = db.Updates(upDateMap).Error
 		if txErr != nil {
-			global.GVA_LOG.Debug(txErr.Error())
+			global.GvaLog.Debug(txErr.Error())
 			return txErr
 		}
 		return nil
@@ -91,6 +91,6 @@ func UpdateBaseMenu(menu model.SysBaseMenu) (err error) {
 //@return: err error, menu model.SysBaseMenu
 
 func GetBaseMenuById(id float64) (err error, menu model.SysBaseMenu) {
-	err = global.GVA_DB.Preload("Parameters").Where("id = ?", id).First(&menu).Error
+	err = global.GvaDb.Preload("Parameters").Where("id = ?", id).First(&menu).Error
 	return
 }

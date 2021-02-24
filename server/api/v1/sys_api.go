@@ -27,7 +27,7 @@ func CreateApi(c *gin.Context) {
 		return
 	}
 	if err := service.CreateApi(api); err != nil {
-		global.GVA_LOG.Error("创建失败!", zap.Any("err", err))
+		global.GvaLog.Error("创建失败!", zap.Any("err", err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -50,7 +50,7 @@ func DeleteApi(c *gin.Context) {
 		return
 	}
 	if err := service.DeleteApi(api); err != nil {
-		global.GVA_LOG.Error("删除失败!", zap.Any("err", err))
+		global.GvaLog.Error("删除失败!", zap.Any("err", err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -73,7 +73,7 @@ func GetApiList(c *gin.Context) {
 		return
 	}
 	if err, list, total := service.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, pageInfo.Desc); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
@@ -102,7 +102,7 @@ func GetApiById(c *gin.Context) {
 	}
 	err, api := service.GetApiById(idInfo.Id)
 	if err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithData(response.SysAPIResponse{Api: api}, c)
@@ -125,7 +125,7 @@ func UpdateApi(c *gin.Context) {
 		return
 	}
 	if err := service.UpdateApi(api); err != nil {
-		global.GVA_LOG.Error("修改失败!", zap.Any("err", err))
+		global.GvaLog.Error("修改失败!", zap.Any("err", err))
 		response.FailWithMessage("修改失败", c)
 	} else {
 		response.OkWithMessage("修改成功", c)
@@ -141,7 +141,7 @@ func UpdateApi(c *gin.Context) {
 // @Router /api/getAllApis [post]
 func GetAllApis(c *gin.Context) {
 	if err, apis := service.GetAllApis(); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.SysAPIListResponse{Apis: apis}, "获取成功", c)

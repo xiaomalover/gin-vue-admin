@@ -26,10 +26,10 @@ import (
 func ExportExcel(c *gin.Context) {
 	var excelInfo model.ExcelInfo
 	_ = c.ShouldBindJSON(&excelInfo)
-	filePath := global.GVA_CONFIG.Excel.Dir + excelInfo.FileName
+	filePath := global.GvaConfig.Excel.Dir + excelInfo.FileName
 	err := service.ParseInfoList2Excel(excelInfo.InfoList, filePath)
 	if err != nil {
-		global.GVA_LOG.Error("转换Excel失败!", zap.Any("err", err))
+		global.GvaLog.Error("转换Excel失败!", zap.Any("err", err))
 		response.FailWithMessage("转换Excel失败", c)
 		return
 	}
@@ -48,11 +48,11 @@ func ExportExcel(c *gin.Context) {
 func ImportExcel(c *gin.Context) {
 	_, header, err := c.Request.FormFile("file")
 	if err != nil {
-		global.GVA_LOG.Error("接收文件失败!", zap.Any("err", err))
+		global.GvaLog.Error("接收文件失败!", zap.Any("err", err))
 		response.FailWithMessage("接收文件失败", c)
 		return
 	}
-	_ = c.SaveUploadedFile(header, global.GVA_CONFIG.Excel.Dir+"ExcelImport.xlsx")
+	_ = c.SaveUploadedFile(header, global.GvaConfig.Excel.Dir+"ExcelImport.xlsx")
 	response.OkWithMessage("导入成功", c)
 }
 
@@ -65,7 +65,7 @@ func ImportExcel(c *gin.Context) {
 func LoadExcel(c *gin.Context) {
 	menus, err := service.ParseExcel2InfoList()
 	if err != nil {
-		global.GVA_LOG.Error("加载数据失败", zap.Any("err", err))
+		global.GvaLog.Error("加载数据失败", zap.Any("err", err))
 		response.FailWithMessage("加载数据失败", c)
 		return
 	}
@@ -87,10 +87,10 @@ func LoadExcel(c *gin.Context) {
 // @Router /excel/downloadTemplate [get]
 func DownloadTemplate(c *gin.Context) {
 	fileName := c.Query("fileName")
-	filePath := global.GVA_CONFIG.Excel.Dir + fileName
+	filePath := global.GvaConfig.Excel.Dir + fileName
 	ok, err := utils.PathExists(filePath)
 	if !ok || err != nil {
-		global.GVA_LOG.Error("文件不存在", zap.Any("err", err))
+		global.GvaLog.Error("文件不存在", zap.Any("err", err))
 		response.FailWithMessage("文件不存在", c)
 		return
 	}

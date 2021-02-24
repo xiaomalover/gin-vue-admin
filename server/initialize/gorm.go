@@ -17,7 +17,7 @@ import (
 //@return: *gorm.DB
 
 func Gorm() *gorm.DB {
-	switch global.GVA_CONFIG.System.DbType {
+	switch global.GvaConfig.System.DbType {
 	case "mysql":
 		return GormMysql()
 	default:
@@ -56,10 +56,10 @@ func MysqlTables(db *gorm.DB) {
 		model.ExaWfLeave{},
 	)
 	if err != nil {
-		global.GVA_LOG.Error("register table failed", zap.Any("err", err))
+		global.GvaLog.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
-	global.GVA_LOG.Info("register table success")
+	global.GvaLog.Info("register table success")
 }
 
 //
@@ -69,7 +69,7 @@ func MysqlTables(db *gorm.DB) {
 //@return: *gorm.DB
 
 func GormMysql() *gorm.DB {
-	m := global.GVA_CONFIG.Mysql
+	m := global.GvaConfig.Mysql
 	dsn := m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN data source name
@@ -80,7 +80,7 @@ func GormMysql() *gorm.DB {
 		SkipInitializeWithVersion: false, // 根据版本自动配置
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), gormConfig(m.LogMode)); err != nil {
-		global.GVA_LOG.Error("MySQL启动异常", zap.Any("err", err))
+		global.GvaLog.Error("MySQL启动异常", zap.Any("err", err))
 		os.Exit(0)
 		return nil
 	} else {
@@ -99,7 +99,7 @@ func GormMysql() *gorm.DB {
 
 func gormConfig(mod bool) *gorm.Config {
 	var config = &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
-	switch global.GVA_CONFIG.Mysql.LogZap {
+	switch global.GvaConfig.Mysql.LogZap {
 	case "silent", "Silent":
 		config.Logger = internal.Default.LogMode(logger.Silent)
 	case "error", "Error":

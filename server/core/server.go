@@ -13,7 +13,7 @@ type server interface {
 }
 
 func RunWindowsServer() {
-	if global.GVA_CONFIG.System.UseMultipoint {
+	if global.GvaConfig.System.UseMultipoint {
 		// 初始化redis服务
 		initialize.Redis()
 	}
@@ -21,12 +21,12 @@ func RunWindowsServer() {
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")
 
-	address := fmt.Sprintf(":%d", global.GVA_CONFIG.System.Addr)
+	address := fmt.Sprintf(":%d", global.GvaConfig.System.Addr)
 	s := initServer(address, Router)
 	// 保证文本顺序输出
 	// In order to ensure that the text order output can be deleted
 	time.Sleep(10 * time.Microsecond)
-	global.GVA_LOG.Info("server run success on ", zap.String("address", address))
+	global.GvaLog.Info("server run success on ", zap.String("address", address))
 
 	fmt.Printf(`
 	欢迎使用 Gin-Vue-Admin
@@ -36,5 +36,5 @@ func RunWindowsServer() {
 	默认前端文件运行地址:http://127.0.0.1:8080
 	如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gin-vue-admin.com/docs/coffee
 `, address)
-	global.GVA_LOG.Error(s.ListenAndServe().Error())
+	global.GvaLog.Error(s.ListenAndServe().Error())
 }

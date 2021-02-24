@@ -15,14 +15,14 @@ import (
 
 func Routers() *gin.Engine {
 	var Router = gin.Default()
-	Router.StaticFS(global.GVA_CONFIG.Local.Path, http.Dir(global.GVA_CONFIG.Local.Path)) // 为用户头像和文件提供静态地址
+	Router.StaticFS(global.GvaConfig.Local.Path, http.Dir(global.GvaConfig.Local.Path)) // 为用户头像和文件提供静态地址
 	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
-	global.GVA_LOG.Info("use middleware logger")
+	global.GvaLog.Info("use middleware logger")
 	// 跨域
 	Router.Use(middleware.Cors())
-	global.GVA_LOG.Info("use middleware cors")
+	global.GvaLog.Info("use middleware cors")
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	global.GVA_LOG.Info("register swagger handler")
+	global.GvaLog.Info("register swagger handler")
 	// 方便统一添加路由组前缀 多服务器上线使用
 	PublicGroup := Router.Group("")
 	{
@@ -49,6 +49,6 @@ func Routers() *gin.Engine {
 		router.InitWorkflowProcessRouter(PrivateGroup)       // 工作流相关接口
 		router.InitExcelRouter(PrivateGroup)                 // 表格导入导出
 	}
-	global.GVA_LOG.Info("router register success")
+	global.GvaLog.Info("router register success")
 	return Router
 }

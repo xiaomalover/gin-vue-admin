@@ -22,7 +22,7 @@ func Create{{.StructName}}(c *gin.Context) {
 	var {{.Abbreviation}} model.{{.StructName}}
 	_ = c.ShouldBindJSON(&{{.Abbreviation}})
 	if err := service.Create{{.StructName}}({{.Abbreviation}}); err != nil {
-        global.GVA_LOG.Error("创建失败!", zap.Any("err", err))
+        global.GvaLog.Error("创建失败!", zap.Any("err", err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -41,7 +41,7 @@ func Delete{{.StructName}}(c *gin.Context) {
 	var {{.Abbreviation}} model.{{.StructName}}
 	_ = c.ShouldBindJSON(&{{.Abbreviation}})
 	if err := service.Delete{{.StructName}}({{.Abbreviation}}); err != nil {
-        global.GVA_LOG.Error("删除失败!", zap.Any("err", err))
+        global.GvaLog.Error("删除失败!", zap.Any("err", err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -60,7 +60,7 @@ func Delete{{.StructName}}ByIds(c *gin.Context) {
 	var IDS request.IdsReq
     _ = c.ShouldBindJSON(&IDS)
 	if err := service.Delete{{.StructName}}ByIds(IDS); err != nil {
-        global.GVA_LOG.Error("批量删除失败!", zap.Any("err", err))
+        global.GvaLog.Error("批量删除失败!", zap.Any("err", err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -79,7 +79,7 @@ func Update{{.StructName}}(c *gin.Context) {
 	var {{.Abbreviation}} model.{{.StructName}}
 	_ = c.ShouldBindJSON(&{{.Abbreviation}})
 	if err := service.Update{{.StructName}}({{.Abbreviation}}); err != nil {
-        global.GVA_LOG.Error("更新失败!", zap.Any("err", err))
+        global.GvaLog.Error("更新失败!", zap.Any("err", err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -98,7 +98,7 @@ func Find{{.StructName}}(c *gin.Context) {
 	var {{.Abbreviation}} model.{{.StructName}}
 	_ = c.ShouldBindQuery(&{{.Abbreviation}})
 	if err, re{{.Abbreviation}} := service.Get{{.StructName}}({{.Abbreviation}}.ID); err != nil {
-        global.GVA_LOG.Error("查询失败!", zap.Any("err", err))
+        global.GvaLog.Error("查询失败!", zap.Any("err", err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"re{{.Abbreviation}}": re{{.Abbreviation}}}, c)
@@ -117,7 +117,7 @@ func Get{{.StructName}}List(c *gin.Context) {
 	var pageInfo request.{{.StructName}}Search
 	_ = c.ShouldBindQuery(&pageInfo)
 	if err, list, total := service.Get{{.StructName}}InfoList(pageInfo); err != nil {
-	    global.GVA_LOG.Error("获取失败", zap.Any("err", err))
+	    global.GvaLog.Error("获取失败", zap.Any("err", err))
         response.FailWithMessage("获取失败", c)
     } else {
         response.OkWithDetailed(response.PageResult{

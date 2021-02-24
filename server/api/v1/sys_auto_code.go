@@ -32,7 +32,7 @@ func PreviewTemp(c *gin.Context) {
 	}
 	autoCode, err := service.PreviewTemp(a)
 	if err != nil {
-		global.GVA_LOG.Error("预览失败!", zap.Any("err", err))
+		global.GvaLog.Error("预览失败!", zap.Any("err", err))
 		response.FailWithMessage("预览失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{"autoCode": autoCode}, "预览成功", c)
@@ -56,7 +56,7 @@ func CreateTemp(c *gin.Context) {
 	}
 	if a.AutoCreateApiToSql {
 		if err := service.AutoCreateApi(&a); err != nil {
-			global.GVA_LOG.Error("自动化创建失败!请自行清空垃圾数据!", zap.Any("err", err))
+			global.GvaLog.Error("自动化创建失败!请自行清空垃圾数据!", zap.Any("err", err))
 			c.Writer.Header().Add("success", "false")
 			c.Writer.Header().Add("msg", url.QueryEscape("自动化创建失败!请自行清空垃圾数据!"))
 			return
@@ -91,10 +91,10 @@ func CreateTemp(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /autoCode/getTables [get]
 func GetTables(c *gin.Context) {
-	dbName := c.DefaultQuery("dbName", global.GVA_CONFIG.Mysql.Dbname)
+	dbName := c.DefaultQuery("dbName", global.GvaConfig.Mysql.Dbname)
 	err, tables := service.GetTables(dbName)
 	if err != nil {
-		global.GVA_LOG.Error("查询table失败!", zap.Any("err", err))
+		global.GvaLog.Error("查询table失败!", zap.Any("err", err))
 		response.FailWithMessage("查询table失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{"tables": tables}, "获取成功", c)
@@ -110,7 +110,7 @@ func GetTables(c *gin.Context) {
 // @Router /autoCode/getDatabase [get]
 func GetDB(c *gin.Context) {
 	if err, dbs := service.GetDB(); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{"dbs": dbs}, "获取成功", c)
@@ -125,10 +125,10 @@ func GetDB(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /autoCode/getColumn [get]
 func GetColumn(c *gin.Context) {
-	dbName := c.DefaultQuery("dbName", global.GVA_CONFIG.Mysql.Dbname)
+	dbName := c.DefaultQuery("dbName", global.GvaConfig.Mysql.Dbname)
 	tableName := c.Query("tableName")
 	if err, columns := service.GetColumn(tableName, dbName); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{"columns": columns}, "获取成功", c)

@@ -23,7 +23,7 @@ func CreateSysOperationRecord(c *gin.Context) {
 	var sysOperationRecord model.SysOperationRecord
 	_ = c.ShouldBindJSON(&sysOperationRecord)
 	if err := service.CreateSysOperationRecord(sysOperationRecord); err != nil {
-		global.GVA_LOG.Error("创建失败!", zap.Any("err", err))
+		global.GvaLog.Error("创建失败!", zap.Any("err", err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -42,7 +42,7 @@ func DeleteSysOperationRecord(c *gin.Context) {
 	var sysOperationRecord model.SysOperationRecord
 	_ = c.ShouldBindJSON(&sysOperationRecord)
 	if err := service.DeleteSysOperationRecord(sysOperationRecord); err != nil {
-		global.GVA_LOG.Error("删除失败!", zap.Any("err", err))
+		global.GvaLog.Error("删除失败!", zap.Any("err", err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -61,7 +61,7 @@ func DeleteSysOperationRecordByIds(c *gin.Context) {
 	var IDS request.IdsReq
 	_ = c.ShouldBindJSON(&IDS)
 	if err := service.DeleteSysOperationRecordByIds(IDS); err != nil {
-		global.GVA_LOG.Error("批量删除失败!", zap.Any("err", err))
+		global.GvaLog.Error("批量删除失败!", zap.Any("err", err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -84,7 +84,7 @@ func FindSysOperationRecord(c *gin.Context) {
 		return
 	}
 	if err, resysOperationRecord := service.GetSysOperationRecord(sysOperationRecord.ID); err != nil {
-		global.GVA_LOG.Error("查询失败!", zap.Any("err", err))
+		global.GvaLog.Error("查询失败!", zap.Any("err", err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithDetailed(gin.H{"resysOperationRecord": resysOperationRecord}, "查询成功", c)
@@ -103,7 +103,7 @@ func GetSysOperationRecordList(c *gin.Context) {
 	var pageInfo request.SysOperationRecordSearch
 	_ = c.ShouldBindQuery(&pageInfo)
 	if err, list, total := service.GetSysOperationRecordInfoList(pageInfo); err != nil {
-		global.GVA_LOG.Error("获取失败!", zap.Any("err", err))
+		global.GvaLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{
