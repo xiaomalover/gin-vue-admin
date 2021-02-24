@@ -4,9 +4,8 @@ import (
 	"gin-vue-admin/global"
 	"gin-vue-admin/model"
 	"github.com/gookit/color"
-	"time"
-
 	"gorm.io/gorm"
+	"time"
 )
 
 var Api = new(api)

@@ -16,14 +16,12 @@ limitations under the License.
 package gva
 
 import (
-	"github.com/mitchellh/go-homedir"
-	"os"
-
 	"github.com/gookit/color"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
-
 	"github.com/spf13/viper"
-)
+	"os"
+	)
 
 var cfgFile string
 

@@ -17,11 +17,9 @@ package gva
 
 import (
 	"gin-vue-admin/core"
-	"github.com/gookit/color"
-
 	_ "gin-vue-admin/core"
 	"gin-vue-admin/global"
-
+	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )
 

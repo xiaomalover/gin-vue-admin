@@ -8,11 +8,10 @@ import (
 	"gin-vue-admin/model/response"
 	"gin-vue-admin/service"
 	"gin-vue-admin/utils"
-	"net/url"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"net/url"
+	"os"
 )
 
 // @Tags AutoCode

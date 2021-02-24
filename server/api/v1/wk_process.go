@@ -158,7 +158,7 @@ func GetWorkflowProcessList(c *gin.Context) {
 func StartWorkflow(c *gin.Context) {
 	business := c.Query("businessType")
 	wfInfo := model.WorkflowBusinessStruct[business]()
-	c.ShouldBindJSON(wfInfo)
+	_ = c.ShouldBindJSON(wfInfo)
 	err := service.StartWorkflow(wfInfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -177,7 +177,7 @@ func StartWorkflow(c *gin.Context) {
 func CompleteWorkflowMove(c *gin.Context) {
 	business := c.Query("businessType")
 	wfInfo := model.WorkflowBusinessStruct[business]()
-	c.ShouldBindJSON(wfInfo)
+	_ = c.ShouldBindJSON(wfInfo)
 	err := service.CompleteWorkflowMove(wfInfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)

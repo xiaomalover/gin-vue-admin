@@ -4,10 +4,9 @@ import (
 	"gin-vue-admin/global"
 	"gin-vue-admin/model"
 	"github.com/gookit/color"
-	"time"
-
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
+	"time"
 )
 
 var Admin = new(admin)
