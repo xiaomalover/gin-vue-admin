@@ -11,6 +11,9 @@ import (
 	"os"
 )
 
+/**
+ * 配置的获取和设置， 用viper, 可以支持配置文件的热更新（viper.WatchConfig()实现）
+ */
 func Viper(path ...string) *viper.Viper {
 	var config string
 	if len(path) == 0 {
@@ -47,6 +50,7 @@ func Viper(path ...string) *viper.Viper {
 		}
 	})
 
+	//填充配置到全局变量GvaConfig中
 	if err := v.Unmarshal(&global.GvaConfig); err != nil {
 		fmt.Println(err)
 	}
