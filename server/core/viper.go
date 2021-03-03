@@ -1,4 +1,7 @@
 package core
+/**
+ * 配置的获取和设置， 用viper, 可以支持配置文件的热更新（viper.WatchConfig()实现）
+ */
 
 import (
 	"flag"
@@ -11,9 +14,6 @@ import (
 	"os"
 )
 
-/**
- * 配置的获取和设置， 用viper, 可以支持配置文件的热更新（viper.WatchConfig()实现）
- */
 func Viper(path ...string) *viper.Viper {
 	var config string
 	if len(path) == 0 {

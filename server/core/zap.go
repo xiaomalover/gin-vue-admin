@@ -1,4 +1,7 @@
 package core
+/**
+ * 日志设置
+ */
 
 import (
 	"fmt"
