@@ -21,6 +21,7 @@ func GetWriteSyncer() (zapcore.WriteSyncer, error) {
 		zaprotatelogs.WithRotationTime(24*time.Hour),
 	)
 	if global.GvaConfig.Zap.LogInConsole {
+		//命令行和日志文件都记录日志
 		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
 	}
 	return zapcore.AddSync(fileWriter), err
