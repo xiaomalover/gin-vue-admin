@@ -70,6 +70,9 @@ func MysqlTables(db *gorm.DB) {
 
 func GormMysql() *gorm.DB {
 	m := global.GvaConfig.Mysql
+	if m.Dbname == "" {
+		return nil
+	}
 	dsn := m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN data source name
@@ -80,8 +83,9 @@ func GormMysql() *gorm.DB {
 		SkipInitializeWithVersion: false, // 根据版本自动配置
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), gormConfig(m.LogMode)); err != nil {
-		global.GvaLog.Error("MySQL启动异常", zap.Any("err", err))
-		os.Exit(0)
+		//global.GvaLog.Error("MySQL启动异常", zap.Any("err", err))
+		//os.Exit(0)
+		//return nil
 		return nil
 	} else {
 		sqlDB, _ := db.DB()

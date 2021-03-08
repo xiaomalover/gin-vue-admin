@@ -7,6 +7,10 @@ import (
 	"gin-vue-admin/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"os"
+	"os/exec"
+	"runtime"
+	"strconv"
 )
 
 // @Tags System
@@ -42,23 +46,28 @@ func SetSystemConfig(c *gin.Context) {
 	}
 }
 
-// 本方法开发中 开发者windows系统 缺少linux系统所需的包 因此搁置
 // @Tags System
 // @Summary 重启系统
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body model.System true "重启系统"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"重启系统成功"}"
-// @Router /system/ReloadSystem [post]
+// @Success 200 {string} string "{"code":0,"data":{},"msg":"重启系统成功"}"
+// @Router /system/reloadSystem [post]
 func ReloadSystem(c *gin.Context) {
-	var sys model.System
-	_ = c.ShouldBindJSON(&sys)
-	if err := service.SetSystemConfig(sys); err != nil {
+
+	if runtime.GOOS == "windows" {
+		response.FailWithMessage("系统不支持", c)
+		return
+	}
+	pid := os.Getpid()
+	cmd := exec.Command("kill", "-1", strconv.Itoa(pid))
+	err := cmd.Run()
+	if err != nil {
 		global.GvaLog.Error("重启系统失败!", zap.Any("err", err))
 		response.FailWithMessage("重启系统失败", c)
-	} else {
-		response.OkWithMessage("重启系统成功", c)
+		return
 	}
+	response.OkWithMessage("重启系统成功", c)
+	return
 }
 
 // @Tags System

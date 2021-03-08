@@ -14,13 +14,14 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
-	global.GvaVp = core.Viper()          // 初始化Viper
-	global.GvaLog = core.Zap()           // 初始化zap日志库
-	global.GvaDb = initialize.Gorm()     // gorm连接数据库
-	initialize.MysqlTables(global.GvaDb) // 初始化表
-	// 程序结束前关闭数据库链接
-	db, _ := global.GvaDb.DB()
-	defer db.Close()
-
+	global.GvaVp = core.Viper()      // 初始化Viper
+	global.GvaLog = core.Zap()       // 初始化zap日志库
+	global.GvaDb = initialize.Gorm() // gorm连接数据库
+	if global.GvaDb != nil {
+		initialize.MysqlTables(global.GvaDb) // 初始化表
+		// 程序结束前关闭数据库链接
+		db, _ := global.GvaDb.DB()
+		defer db.Close()
+	}
 	core.RunWindowsServer()
 }

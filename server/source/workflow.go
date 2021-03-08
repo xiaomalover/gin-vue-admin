@@ -1,4 +1,4 @@
-package information
+package source
 
 import (
 	"gin-vue-admin/global"
@@ -43,19 +43,33 @@ var WorkflowEndPoint = []model.WorkflowEndPoint{
 //@description: 工作流相关 表数据初始化
 func (w *workflow) Init() error {
 	return global.GvaDb.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Create(&WorkflowProcess).Error; err != nil { // 遇到错误时回滚事务
+		if tx.Where("id IN ?", []string{"leaveFlow"}).Find(&[]model.WorkflowProcess{}).RowsAffected == 1 {
+			// continue
+		} else if err := tx.Create(&WorkflowProcess).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		if err := tx.Create(&WorkflowNodes).Error; err != nil { // 遇到错误时回滚事务
+
+		if tx.Where("id IN ?", []string{"end1603681358043", "end1603681360882", "start1603681292875", "userTask1603681299962"}).Find(&[]model.WorkflowNode{}).RowsAffected == 4 {
+			// continue
+		} else if err := tx.Create(&WorkflowNodes).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		if err := tx.Create(&WorkflowEdge).Error; err != nil { // 遇到错误时回滚事务
+
+		if tx.Where("id IN ?", []string{"flow1604985849039", "flow1604985879574", "flow1604985881207"}).Find(&[]model.WorkflowEdge{}).RowsAffected == 3 {
+
+		} else if err := tx.Create(&WorkflowEdge).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		if err := tx.Create(&WorkflowStartPoint).Error; err != nil { // 遇到错误时回滚事务
+
+		if tx.Where("workflow_edge_id IN ?", []string{"flow1604985849039", "flow1604985879574", "flow1604985881207"}).Find(&[]model.WorkflowStartPoint{}).RowsAffected == 3 {
+
+		} else if err := tx.Create(&WorkflowStartPoint).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		if err := tx.Create(&WorkflowEndPoint).Error; err != nil { // 遇到错误时回滚事务
+
+		if tx.Where("workflow_edge_id IN ?", []string{"flow1604985849039", "flow1604985879574", "flow1604985881207"}).Find(&[]model.WorkflowEndPoint{}).RowsAffected == 3 {
+
+		} else if err := tx.Create(&WorkflowEndPoint).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
 		color.Info.Println("\n[Mysql] --> 工作流相关 表初始数据成功!")

@@ -6,6 +6,8 @@ require (
 	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.2
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/aliyun/aliyun-oss-go-sdk v2.1.6+incompatible
+	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.11.0
 	github.com/casbin/gorm-adapter/v3 v3.0.2
@@ -46,6 +48,7 @@ require (
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.7
 	github.com/tebeka/strftime v0.1.3 // indirect
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.19
 	github.com/unrolled/secure v1.0.7
 	go.uber.org/zap v1.10.0
 	golang.org/x/net v0.0.0-20201224014010-6772e930b67b // indirect

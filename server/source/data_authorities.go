@@ -1,4 +1,4 @@
-package information
+package source
 
 import (
 	"gin-vue-admin/global"
@@ -27,7 +27,7 @@ var infos = []DataAuthority{
 //@description: sys_data_authority_id 表数据初始化
 func (d *dataAuthorities) Init() error {
 	return global.GvaDb.Table("sys_data_authority_id").Transaction(func(tx *gorm.DB) error {
-		if tx.Where("authority_id IN ('888', '9528') ").Find(&[]DataAuthority{}).RowsAffected == 5 {
+		if tx.Where("sys_authority_authority_id IN ('888', '9528') ").Find(&[]DataAuthority{}).RowsAffected == 5 {
 			color.Danger.Println("\n[Mysql] --> sys_data_authority_id 表初始数据已存在!")
 			return nil
 		}

@@ -19,7 +19,7 @@ func Routers() *gin.Engine {
 	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
 	global.GvaLog.Info("use middleware logger")
 	// 跨域
-	Router.Use(middleware.Cors())
+	//Router.Use(middleware.Cors()) // 如需跨域可以打开
 	global.GvaLog.Info("use middleware cors")
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.GvaLog.Info("register swagger handler")
@@ -27,6 +27,7 @@ func Routers() *gin.Engine {
 	PublicGroup := Router.Group("")
 	{
 		router.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
+		router.InitInitRouter(PublicGroup) // 自动初始化相关
 	}
 	PrivateGroup := Router.Group("")
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
