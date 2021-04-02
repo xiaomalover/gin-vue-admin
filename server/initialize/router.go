@@ -47,7 +47,6 @@ func Routers() *gin.Engine {
 		router.InitSysOperationRecordRouter(PrivateGroup)    // 操作记录
 		router.InitSysDictionaryDetailRouter(PrivateGroup)   // 字典详情管理
 		router.InitFileUploadAndDownloadRouter(PrivateGroup) // 文件上传下载功能路由
-		router.InitWorkflowProcessRouter(PrivateGroup)       // 工作流相关接口
 		router.InitExcelRouter(PrivateGroup)                 // 表格导入导出
 	}
 	global.GvaLog.Info("router register success")

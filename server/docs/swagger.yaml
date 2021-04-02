@@ -388,56 +388,7 @@ definitions:
       uuid:
         type: string
     type: object
-  model.SysWorkflow:
-    properties:
-      createdAt:
-        type: string
-      id:
-        type: integer
-      updatedAt:
-        type: string
-      workflowDescription:
-        description: 工作流描述
-        type: string
-      workflowName:
-        description: 工作流英文id
-        type: string
-      workflowNickName:
-        description: 工作流名称
-        type: string
-      workflowStep:
-        description: 工作流步骤
-        items:
-          $ref: '#/definitions/model.SysWorkflowStepInfo'
-        type: array
-    type: object
-  model.SysWorkflowStepInfo:
-    properties:
-      createdAt:
-        type: string
-      id:
-        type: integer
-      isEnd:
-        description: 是否是完结流节点
-        type: boolean
-      isStart:
-        description: 是否是开始流节点
-        type: boolean
-      stepAuthorityID:
-        description: 操作者级别id
-        type: string
-      stepName:
-        description: 工作流名称
-        type: string
-      stepNo:
-        description: 步骤id （第几步）
-        type: number
-      updatedAt:
-        type: string
-      workflowID:
-        description: 所属工作流ID
-        type: integer
-    type: object
+
   model.System:
     properties:
       config:
@@ -2140,25 +2091,6 @@ paths:
       summary: 设置用户信息
       tags:
       - SysUser
-  /workflow/createWorkFlow:
-    post:
-      parameters:
-      - description: 注册工作流接口
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/model.SysWorkflow'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"注册成功"}'
-          schema:
-            type: string
-      summary: 注册工作流
-      tags:
-      - workflow
 securityDefinitions:
   ApiKeyAuth:
     in: header

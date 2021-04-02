@@ -141,12 +141,6 @@ export default {
           name: "formCreate",
           color: "#ff85c0",
         },
-        {
-          label: "关于我们",
-          icon: "el-icon el-icon-user",
-          name: "about",
-          color: "#5cdbd3",
-        },
       ],
     };
   },

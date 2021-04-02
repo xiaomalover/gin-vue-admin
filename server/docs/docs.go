@@ -2496,36 +2496,6 @@ var doc = `{
                     }
                 }
             }
-        },
-        "/workflow/createWorkFlow": {
-            "post": {
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "workflow"
-                ],
-                "summary": "注册工作流",
-                "parameters": [
-                    {
-                        "description": "注册工作流接口",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.SysWorkflow"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{\"success\":true,\"data\":{},\"msg\":\"注册成功\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -3111,77 +3081,6 @@ var doc = `{
                 },
                 "uuid": {
                     "type": "string"
-                }
-            }
-        },
-        "model.SysWorkflow": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "workflowDescription": {
-                    "description": "工作流描述",
-                    "type": "string"
-                },
-                "workflowName": {
-                    "description": "工作流英文id",
-                    "type": "string"
-                },
-                "workflowNickName": {
-                    "description": "工作流名称",
-                    "type": "string"
-                },
-                "workflowStep": {
-                    "description": "工作流步骤",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.SysWorkflowStepInfo"
-                    }
-                }
-            }
-        },
-        "model.SysWorkflowStepInfo": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "isEnd": {
-                    "description": "是否是完结流节点",
-                    "type": "boolean"
-                },
-                "isStart": {
-                    "description": "是否是开始流节点",
-                    "type": "boolean"
-                },
-                "stepAuthorityID": {
-                    "description": "操作者级别id",
-                    "type": "string"
-                },
-                "stepName": {
-                    "description": "工作流名称",
-                    "type": "string"
-                },
-                "stepNo": {
-                    "description": "步骤id （第几步）",
-                    "type": "number"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "workflowID": {
-                    "description": "所属工作流ID",
-                    "type": "integer"
                 }
             }
         },
